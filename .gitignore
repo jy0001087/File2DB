@@ -1,0 +1,6 @@
+.idea/*
+excelReader/target/*
+*.iml
+excelReader/*.classpath
+excelReader/*.project
+excelReader/*.settings
