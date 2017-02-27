@@ -4,3 +4,4 @@ excelReader/target/*
 excelReader/*.classpath
 excelReader/*.project
 excelReader/*.settings
+~*
