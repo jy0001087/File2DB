@@ -7,17 +7,17 @@ public class SQLResultBean {
     private String yhmc;
     private String jgmc;
     private String khmc;
-    private String NRJ;
+    private String nrj;
     private String syfd;
     private String jglb;
-    private int sing;
 
-    public int getSing() {
-        return sing;
+
+    public String getNrj() {
+        return nrj;
     }
 
-    public void setSing(int sing) {
-        this.sing = sing;
+    public void setNrj(String nrj) {
+        this.nrj = nrj;
     }
 
     public String getYhmc() {
@@ -42,14 +42,6 @@ public class SQLResultBean {
 
     public void setKhmc(String khmc) {
         this.khmc = khmc;
-    }
-
-    public String getNRJ() {
-        return NRJ;
-    }
-
-    public void setNRJ(String NRJ) {
-        this.NRJ = NRJ;
     }
 
     public String getSyfd() {

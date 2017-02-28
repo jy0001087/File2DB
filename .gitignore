@@ -5,3 +5,9 @@ excelReader/*.classpath
 excelReader/*.project
 excelReader/*.settings
 ~*
+
+ExcelReader/target/*
+ExcelReader/*.classpath
+ExcelReader/*.project
+ExcelReader/*.settings
+~*

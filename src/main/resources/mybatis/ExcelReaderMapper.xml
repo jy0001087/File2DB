@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="latex.tools.single.excelReader.Mapper.ISQLResultBean">
+    <select id="selectOne"  resultType="latex.tools.single.excelReader.xmlBeans.SQLResultBean">
+        select * from cib_cust_deposit where rybh='1'
+    </select>
+</mapper>
