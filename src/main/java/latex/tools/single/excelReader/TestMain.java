@@ -31,7 +31,7 @@ public class TestMain {
         TestMain test = new TestMain();
         Workbook wb =test.ExcelReader("/excel/source.xlsx");
         test.CIBwork(wb);
-       // test.whatInMap(reslutmap1);
+        test.whatInMap(reslutmap1);
     }
 
     public Workbook ExcelReader(String fileDir) {
@@ -67,8 +67,6 @@ public class TestMain {
                 reslutmap1.put(sqlresult.getJgmc(),0);
             }
 
-            whatInMap(reslutmap1);
-           // logger.trace("cell value is : {}",row.getCell(1));
             resultList.add(sqlresult);
         }
 
@@ -81,10 +79,6 @@ public class TestMain {
             SQLResultBean result = (SQLResultBean)it.next();
             switch(result.getSyfd()) {
                 case "0":
-                    EnterpriseCus(result);
-                    //logger.trace("here");
-                    break;
-                case "05":
                     EnterpriseCus(result);
                     break;
                 default :
