@@ -10,7 +10,24 @@ public class SQLResultBean {
     private String nrj;
     private String syfd;
     private String jglb;
+    private String depositType;
+    private String depositMonth;
 
+    public String getDepositType() {
+        return depositType;
+    }
+
+    public void setDepositType(String depositType) {
+        this.depositType = depositType;
+    }
+
+    public String getDepositMonth() {
+        return depositMonth;
+    }
+
+    public void setDepositMonth(String depositMonth) {
+        this.depositMonth = depositMonth;
+    }
 
     public String getNrj() {
         return nrj;

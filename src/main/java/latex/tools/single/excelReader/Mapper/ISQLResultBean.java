@@ -7,4 +7,5 @@ import latex.tools.single.excelReader.xmlBeans.SQLResultBean;
  */
 public interface ISQLResultBean {
     public SQLResultBean selectOne();
+    public void addSQLResult(SQLResultBean bean);
 }

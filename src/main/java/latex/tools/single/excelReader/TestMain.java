@@ -1,6 +1,11 @@
 package latex.tools.single.excelReader;
 
+import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
+import latex.tools.single.excelReader.Mapper.ISQLResultBean;
 import latex.tools.single.excelReader.xmlBeans.SQLResultBean;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -11,7 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2017/2/27.
@@ -20,22 +28,28 @@ public class TestMain {
     public static Logger logger = LoggerFactory.getLogger(TestMain.class);
     private static ArrayList<SQLResultBean> resultList = new ArrayList<SQLResultBean>();
 
-    private ArrayList<SQLResultBean> EntLoanList = new ArrayList<SQLResultBean>();
-    private ArrayList<SQLResultBean> EntNoLoanList = new ArrayList<SQLResultBean>();
-    private ArrayList<SQLResultBean> GovLoanList = new ArrayList<SQLResultBean>();
-    private ArrayList<SQLResultBean> GovNoLoanList = new ArrayList<SQLResultBean>();
-
     public static void main(String[] args) {
+        ArrayList<String> fileList = new ArrayList<String>();
+        Workbook wb = null;
+        /*
+        fileList.add("/excel/通知_1.xlsx");
+        fileList.add("/excel/通知_12.xlsx");
+        fileList.add("/excel/定期_1.xlsx");
+        fileList.add("/excel/定期_12.xlsx"); */
+        fileList.add("/excel/活期_1.xlsx");
+        fileList.add("/excel/活期_12.xlsx");
         TestMain test = new TestMain();
-        Workbook wb =test.ExcelReader("/excel/source.xlsx");
-        test.ConvertToBeanMap(wb);
-        test.DataSliper(resultList);
+        for(int i=0;i<fileList.size();i++) {
+            wb = test.ExcelReader(fileList.get(i));
+            test.ConvertToBeanMap(wb,fileList.get(i));
+            test.InsertCibCustDep(resultList);
+        }
     }
 
     public Workbook ExcelReader(String fileDir) {
         Workbook wb = null;
         try {
-            wb = WorkbookFactory.create(new FileInputStream(this.getClass().getResource(fileDir).getPath()));
+            wb = WorkbookFactory.create(new FileInputStream(this.getClass().getResource(fileDir).getPath()),"utf8");
         }catch(IOException e){
             logger.error("can't find excel file");
             e.printStackTrace();
@@ -46,8 +60,21 @@ public class TestMain {
         return wb;
     }
 
-    public void ConvertToBeanMap(Workbook wb) {
+    public void ConvertToBeanMap(Workbook wb,String filedir) {
         logger.trace("entry ConvertToBean Unit");
+        String depositType="";
+        String depositMonth="";
+        Pattern pattern = Pattern.compile("[\\u4e00-\\u9fa5]{2}");
+        Matcher matcher = pattern.matcher(filedir);
+        while(matcher.find()){
+           depositType = matcher.group();
+        }
+        Pattern patternNum = Pattern.compile("[0-9]");
+        Matcher matcherNum = patternNum.matcher(filedir);
+        while (matcherNum.find()){
+            depositMonth = matcherNum.group();
+        }
+
         Sheet sqlResult = wb.getSheet("SQLResults");
         for (Iterator rowit = sqlResult.rowIterator(); rowit.hasNext(); ) {
             SQLResultBean sqlresult = new SQLResultBean();
@@ -59,49 +86,21 @@ public class TestMain {
             sqlresult.setNrj(row.getCell(6).toString());
             sqlresult.setSyfd(row.getCell(7).toString());
             sqlresult.setYhmc(row.getCell(2).toString());
-
+            sqlresult.setDepositType(depositType);
+            sqlresult.setDepositMonth(depositMonth);
             resultList.add(sqlresult);
         }
         logger.info("totoal number of resultList is {}",resultList.size());
     }
-    public void DataSliper(ArrayList<SQLResultBean> resultList){
-        for (Iterator it = resultList.listIterator();it.hasNext();){
-            SQLResultBean result = (SQLResultBean)it.next();
-            //logger.trace("{}",result.getSyfd().equals("0"));
-            switch(result.getSyfd()) {
-                case "0":
-                    //无贷户
-                    NoLoan(result);
-                    // logger.trace("NoLoan - {}",result.getJglb());
-                    break;
-                default :
-                    //有贷户
-                    Loan(result);
-                    break;
-            }
-        }
-        whatInList(EntNoLoanList);
-    }
 
-    public void NoLoan(SQLResultBean bean){
-        if (bean.getJglb().equals("01")||bean.getJglb().equals("02")
-                ||bean.getJglb().equals("13")||bean.getJglb().equals("14")){
-            EntNoLoanList.add(bean);
-           // logger.trace("NoLoan");
-        }else
-        {
-            GovNoLoanList.add(bean);
+    public void InsertCibCustDep(ArrayList<SQLResultBean> bean){
+        SqlSessionFactory factory = new DataBaseTest().getSession();
+        SqlSession session = factory.openSession();
+        ISQLResultBean oper = session.getMapper(ISQLResultBean.class);
+        for (int i =0;i<bean.size();i++){
+            oper.addSQLResult(bean.get(i));
         }
-    }
-
-    public void Loan(SQLResultBean bean){
-        if (bean.getJglb().equals("01")||bean.getJglb().equals("02")
-                ||bean.getJglb().equals("13")||bean.getJglb().equals("14")){
-            EntLoanList.add(bean);
-        }else
-        {
-            GovLoanList.add(bean);
-        }
+        session.commit();
     }
 
     public void whatInList(ArrayList<SQLResultBean> list){

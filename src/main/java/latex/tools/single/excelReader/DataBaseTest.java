@@ -17,11 +17,22 @@ import java.io.InputStream;
  */
 public class DataBaseTest {
     public static Logger logger = LoggerFactory.getLogger(DataBaseTest.class);
+
     public static void main(String[] args) {
         SqlSession session = (new DataBaseTest().getSession()).openSession();
         //SQLResultBean bean = (SQLResultBean)session.selectOne("latex.tools.single.excelReader.selectOne");
         ISQLResultBean oper=session.getMapper(ISQLResultBean.class);
         SQLResultBean bean = oper.selectOne();
+
+        SQLResultBean addbean = new SQLResultBean();
+        addbean.setJglb("2");
+        addbean.setJgmc("2");
+        addbean.setKhmc("2");
+        addbean.setNrj("2");
+        addbean.setSyfd("2");
+        addbean.setYhmc("2");
+        oper.addSQLResult(addbean);
+        session.commit();
         logger.trace(bean.getYhmc());
     }
 
