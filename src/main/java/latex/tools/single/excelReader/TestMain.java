@@ -14,9 +14,13 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,13 +35,13 @@ public class TestMain {
     public static void main(String[] args) {
         ArrayList<String> fileList = new ArrayList<String>();
         Workbook wb = null;
-        /*
-        fileList.add("/excel/通知_1.xlsx");
-        fileList.add("/excel/通知_12.xlsx");
-        fileList.add("/excel/定期_1.xlsx");
-        fileList.add("/excel/定期_12.xlsx"); */
-        fileList.add("/excel/活期_1.xlsx");
-        fileList.add("/excel/活期_12.xlsx");
+
+        fileList.add("/excel/TZ_1.xlsx");
+        fileList.add("/excel/TZ_12.xlsx");
+        fileList.add("/excel/DQ_1.xlsx");
+        fileList.add("/excel/DQ_12.xlsx");
+        fileList.add("/excel/HQ_1.xlsx");
+        fileList.add("/excel/HQ_12.xlsx");
         TestMain test = new TestMain();
         for(int i=0;i<fileList.size();i++) {
             wb = test.ExcelReader(fileList.get(i));
@@ -47,9 +51,11 @@ public class TestMain {
     }
 
     public Workbook ExcelReader(String fileDir) {
+        logger.trace("filedir is {}",fileDir);
         Workbook wb = null;
         try {
-            wb = WorkbookFactory.create(new FileInputStream(this.getClass().getResource(fileDir).getPath()),"utf8");
+            wb = WorkbookFactory.create(new FileInputStream(
+            this.getClass().getResource(fileDir).getPath()));
         }catch(IOException e){
             logger.error("can't find excel file");
             e.printStackTrace();
@@ -64,18 +70,18 @@ public class TestMain {
         logger.trace("entry ConvertToBean Unit");
         String depositType="";
         String depositMonth="";
-        Pattern pattern = Pattern.compile("[\\u4e00-\\u9fa5]{2}");
+        Pattern pattern = Pattern.compile("[A-Z]{2}");
         Matcher matcher = pattern.matcher(filedir);
         while(matcher.find()){
            depositType = matcher.group();
         }
-        Pattern patternNum = Pattern.compile("[0-9]");
+        Pattern patternNum = Pattern.compile("[0-9]{1,2}");
         Matcher matcherNum = patternNum.matcher(filedir);
         while (matcherNum.find()){
             depositMonth = matcherNum.group();
         }
 
-        Sheet sqlResult = wb.getSheet("SQLResults");
+        Sheet sqlResult = wb.getSheet("SQL Results");
         for (Iterator rowit = sqlResult.rowIterator(); rowit.hasNext(); ) {
             SQLResultBean sqlresult = new SQLResultBean();
             XSSFRow row = (XSSFRow) rowit.next();

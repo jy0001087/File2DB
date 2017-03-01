@@ -7,7 +7,7 @@
         select * from cib_cust_deposit where rybh='1'
     </select>
     <insert id="addSQLResult" parameterType="latex.tools.single.excelReader.xmlBeans.SQLResultBean">
-        insert into cib_cust_deposit (yhmc,jgmc,khmc,nrj,sfyd,jglb)
-        values(#{yhmc},#{jgmc},#{khmc},#{nrj},#{syfd},#{jglb})
+        insert into cib_cust_deposit (yhmc,jgmc,khmc,nrj,sfyd,jglb,deposittype,depositmonth)
+        values(#{yhmc},#{jgmc},#{khmc},#{nrj},#{syfd},#{jglb},#{depositType},#{depositMonth})
     </insert>
 </mapper>

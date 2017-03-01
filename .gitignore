@@ -1,13 +1,8 @@
 .idea/*
-excelReader/target/*
 *.iml
-excelReader/*.classpath
-excelReader/*.project
-excelReader/*.settings
 ~*
 
-ExcelReader/target/*
+*/target/*
 ExcelReader/*.classpath
 ExcelReader/*.project
 ExcelReader/*.settings
-~*
