@@ -14,6 +14,7 @@ import java.io.InputStream;
 
 /**
  * Created by Bud on 2017/2/28.
+ * 数据库连接性测试
  */
 public class DataBaseTest {
     public static Logger logger = LoggerFactory.getLogger(DataBaseTest.class);
@@ -23,7 +24,7 @@ public class DataBaseTest {
         //SQLResultBean bean = (SQLResultBean)session.selectOne("latex.tools.single.excelReader.selectOne");
         ISQLResultBean oper=session.getMapper(ISQLResultBean.class);
         SQLResultBean bean = oper.selectOne();
-
+/**
         SQLResultBean addbean = new SQLResultBean();
         addbean.setJglb("2");
         addbean.setJgmc("2");
@@ -33,6 +34,7 @@ public class DataBaseTest {
         addbean.setYhmc("2");
         oper.addSQLResult(addbean);
         session.commit();
+ **/
         logger.trace(bean.getYhmc());
     }
 

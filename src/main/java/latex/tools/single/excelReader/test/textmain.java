@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Bud on 2017/2/28.
+ * 仅用于测试文件读取和文件名的正则匹配测试
  */
 public class textmain {
     public static void main(String[] xargs){

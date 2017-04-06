@@ -36,12 +36,9 @@ public class TestMain {
         ArrayList<String> fileList = new ArrayList<String>();
         Workbook wb = null;
 
-        fileList.add("/excel/TZ_1.xlsx");
-        fileList.add("/excel/TZ_12.xlsx");
-        fileList.add("/excel/DQ_1.xlsx");
-        fileList.add("/excel/DQ_12.xlsx");
-        fileList.add("/excel/HQ_1.xlsx");
-        fileList.add("/excel/HQ_12.xlsx");
+        fileList.add("/excel/TZ_2.xlsx");
+        fileList.add("/excel/DQ_2.xlsx");
+        fileList.add("/excel/HQ_2.xlsx");
         TestMain test = new TestMain();
         for(int i=0;i<fileList.size();i++) {
             wb = test.ExcelReader(fileList.get(i));
