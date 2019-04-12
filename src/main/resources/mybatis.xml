@@ -8,7 +8,7 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="org.postgresql.Driver"/>
-                <property name="url" value="jdbc:postgresql://115.29.114.229:5432/cib_pay_dev"/>
+                <property name="url" value="jdbc:postgresql://ssh.wind4us.com:5432/exceltools"/>
                 <property name="username" value="postgres"/>
                 <property name="password" value="postgres"/>
             </dataSource>

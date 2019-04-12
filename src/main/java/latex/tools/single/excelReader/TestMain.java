@@ -37,8 +37,6 @@ public class TestMain {
         Workbook wb = null;
 
         fileList.add("/excel/TZ_2.xlsx");
-        fileList.add("/excel/DQ_2.xlsx");
-        fileList.add("/excel/HQ_2.xlsx");
         TestMain test = new TestMain();
         for(int i=0;i<fileList.size();i++) {
             wb = test.ExcelReader(fileList.get(i));
@@ -76,7 +74,7 @@ public class TestMain {
         Matcher matcherNum = patternNum.matcher(filedir);
         while (matcherNum.find()){
             depositMonth = matcherNum.group();
-        }
+        }a
 
         Sheet sqlResult = wb.getSheet("SQL Results");
         for (Iterator rowit = sqlResult.rowIterator(); rowit.hasNext(); ) {
