@@ -1,26 +1,16 @@
 package latex.tools.single.excelReader;
 
-import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
 import latex.tools.single.excelReader.Mapper.ISQLResultBean;
 import latex.tools.single.excelReader.xmlBeans.SQLResultBean;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,33 +23,21 @@ public class TestMain {
     private static ArrayList<SQLResultBean> resultList = new ArrayList<SQLResultBean>();
 
     public static void main(String[] args) {
+        logger.info("start read file");
         ArrayList<String> fileList = new ArrayList<String>();
         Workbook wb = null;
 
-        fileList.add("/excel/TZ_2.xlsx");
+        fileList.add("/excel/DQ_1.xlsx");
         TestMain test = new TestMain();
+        ExcelUnit excel= new ExcelUnit();
         for(int i=0;i<fileList.size();i++) {
-            wb = test.ExcelReader(fileList.get(i));
-            test.ConvertToBeanMap(wb,fileList.get(i));
-            test.InsertCibCustDep(resultList);
+            wb = excel.ExcelReader(fileList.get(i));
+            //test.ConvertToBeanMap(wb,fileList.get(i));
+            //test.InsertCibCustDep(resultList);
         }
     }
 
-    public Workbook ExcelReader(String fileDir) {
-        logger.trace("filedir is {}",fileDir);
-        Workbook wb = null;
-        try {
-            wb = WorkbookFactory.create(new FileInputStream(
-            this.getClass().getResource(fileDir).getPath()));
-        }catch(IOException e){
-            logger.error("can't find excel file");
-            e.printStackTrace();
-        }catch(InvalidFormatException e){
-            logger.error("not currect xlsx file");
-            e.printStackTrace();
-        }
-        return wb;
-    }
+
 
     public void ConvertToBeanMap(Workbook wb,String filedir) {
         logger.trace("entry ConvertToBean Unit");
@@ -74,7 +52,7 @@ public class TestMain {
         Matcher matcherNum = patternNum.matcher(filedir);
         while (matcherNum.find()){
             depositMonth = matcherNum.group();
-        }a
+        }
 
         Sheet sqlResult = wb.getSheet("SQL Results");
         for (Iterator rowit = sqlResult.rowIterator(); rowit.hasNext(); ) {
