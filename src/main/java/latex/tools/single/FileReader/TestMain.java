@@ -1,7 +1,7 @@
-package latex.tools.single.excelReader;
+package latex.tools.single.FileReader;
 
-import latex.tools.single.excelReader.Mapper.ISQLResultBean;
-import latex.tools.single.excelReader.xmlBeans.SQLResultBean;
+import latex.tools.single.FileReader.Mapper.ISQLResultBean;
+import latex.tools.single.FileReader.xmlBeans.SQLResultBean;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.poi.ss.usermodel.Sheet;

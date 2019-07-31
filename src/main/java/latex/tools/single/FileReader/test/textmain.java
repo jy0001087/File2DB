@@ -1,4 +1,4 @@
-package latex.tools.single.excelReader.test;
+package latex.tools.single.FileReader.test;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

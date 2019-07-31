@@ -1,6 +1,6 @@
-package latex.tools.single.excelReader.Mapper;
+package latex.tools.single.FileReader.Mapper;
 
-import latex.tools.single.excelReader.xmlBeans.SQLResultBean;
+import latex.tools.single.FileReader.xmlBeans.SQLResultBean;
 
 /**
  * Created by Bud on 2017/2/28.

@@ -1,7 +1,7 @@
-package latex.tools.single.excelReader;
+package latex.tools.single.FileReader;
 
-import latex.tools.single.excelReader.Mapper.ISQLResultBean;
-import latex.tools.single.excelReader.xmlBeans.SQLResultBean;
+import latex.tools.single.FileReader.Mapper.ISQLResultBean;
+import latex.tools.single.FileReader.xmlBeans.SQLResultBean;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -21,7 +21,7 @@ public class DataBaseTest {
 
     public static void main(String[] args) {
         SqlSession session = (new DataBaseTest().getSession()).openSession();
-        //SQLResultBean bean = (SQLResultBean)session.selectOne("latex.tools.single.excelReader.selectOne");
+        //SQLResultBean bean = (SQLResultBean)session.selectOne("latex.tools.single.FileReader.selectOne");
         ISQLResultBean oper=session.getMapper(ISQLResultBean.class);
         SQLResultBean bean = oper.selectOne();
 /**

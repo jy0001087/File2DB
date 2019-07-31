@@ -1,4 +1,4 @@
-package latex.tools.single.excelReader.xmlBeans;
+package latex.tools.single.FileReader.xmlBeans;
 
 /**
  * Created by Administrator on 2017/2/27.

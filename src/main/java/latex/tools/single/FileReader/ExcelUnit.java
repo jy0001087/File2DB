@@ -1,4 +1,4 @@
-package latex.tools.single.excelReader;
+package latex.tools.single.FileReader;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;

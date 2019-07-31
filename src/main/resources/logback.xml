@@ -7,8 +7,6 @@
         </layout>
     </appender>
 
-    <logger name="latex.tools.single" level="ERROR"/>
-
     <root level="debug">
         <appender-ref ref="STDOUT" />
     </root>
